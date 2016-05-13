@@ -1,0 +1,46 @@
+ul {
+	position: relative;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	width: 500px;
+	list-style: none;
+}
+ul{
+	padding:0px;
+}
+li {
+	border: 1px solid #ccc;
+	background-color: #eee;
+	padding: 5px ;
+	color: #000;
+	font-size: 120%;
+}
+
+li span {
+	padding-left: 10px;
+}
+
+h1 {
+	text-align: center;
+}
+
+p {
+	text-align: center;
+}
+
+.center {
+	text-align: center;
+}
+
+#todoList{
+	padding-right:0px
+}
+
+#deadlineList{
+	padding-left:0px;
+}
+
+input[type=checkbox]{
+	margin-left:5px;
+}
