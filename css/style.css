@@ -1,3 +1,16 @@
+body {
+	background-color: #555;
+	color: #fff;
+}
+
+button {
+	color: #333
+}
+
+#inItemText, #datepicker {
+	color: #333;
+}
+
 ul {
 	position: relative;
 	list-style: none;
@@ -6,13 +19,15 @@ ul {
 	width: 500px;
 	list-style: none;
 }
-ul{
-	padding:0px;
+
+ul {
+	padding: 0px;
 }
+
 li {
 	border: 1px solid #ccc;
 	background-color: #eee;
-	padding: 5px ;
+	padding: 5px;
 	color: #000;
 	font-size: 120%;
 }
@@ -33,14 +48,14 @@ p {
 	text-align: center;
 }
 
-#todoList{
-	padding-right:0px
+#todoList {
+	padding-right: 0px
 }
 
-#deadlineList{
-	padding-left:0px;
+#deadlineList {
+	padding-left: 0px;
 }
 
-input[type=checkbox]{
-	margin-left:5px;
+input[type=checkbox] {
+	margin-left: 5px;
 }
