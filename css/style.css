@@ -31,7 +31,9 @@ li {
 li span {
 	
 }
-
+.delete{
+	float:right;
+}
 #btnDetail, #btnDel {
 	float: right;
 }

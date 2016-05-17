@@ -2,10 +2,11 @@
 	<input 	class="chkBox" 
 			type="checkbox" 
 			onclick="updateItemStatus(this)" 
-			id="cb_{{ItemList.length}}"/>
-	<span 	class="text"id="item_{{ItemList.length}}">
+			id="cb_{{ItemListLength}}"/>
+	<span 	class="text"id="item_{{ItemListLength}}">
 				{{itemText}}
 	</span>
+	<button onClick="removeItem({{ItemListLength}})" class="delete" id="btnDel_{{ItemListLength}}">Delete</button>
 </li>
 		
 

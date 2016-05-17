@@ -1,58 +1,42 @@
 var ItemList = [];
 
-$(document).ready(
+function addNewItem() {
+	var viewItem = {
+		ItemListLength : ItemList.length,
+		itemText : $('#inItemText').val(),
+		deadline : $('#datepicker').val(),
+	};
+	ItemList.push(viewItem);
+	buildItemList(viewItem)
+}
+function buildItemList(viewItem) {
+	$('#inItemText').focus();
 
-		function() {
-			$("#datepicker").datepicker();
-			$('#inItemText').focus();
+	if (!viewItem.itemText || viewItem.itemText == ""
+			|| viewItem.itemText == " ") {
+		return false;
+	} else {
+		$.get('templateText.html', function(template) {
+			var renderedText = Mustache.render(template, viewItem);
+			$('#todoList').append(renderedText);
+		})
+		$.get('templateDead.html', function(template) {
+			var renderedDead = Mustache.render(template, viewItem);
+			$('#deadlineList').append(renderedDead);
+		})
 
-			function addNewItem(cbId, itemText, deadline) {
-				var viewItem = {
-					itemText : $('#inItemText').val(),
-					deadline : $('#datepicker').val(),
-
-				};
-				ItemList.push(viewItem);
-
-				$('#inItemText').focus();
-				if (!viewItem.itemText || viewItem.itemText == ""
-						|| viewItem.itemText == " ") {
-					return false;
-				} else {
-					$.get('templateText.html', function(template) {
-						var renderedText = Mustache.render(template, viewItem);
-						$('#todoList').append(renderedText);
-					})
-					$.get('templateDead.html', function(template) {
-						var renderedDead = Mustache.render(template, viewItem);
-						$('#deadlineList').append(renderedDead);
-					})
-
-					$("#inItemText").val("");
-					$("#datepicker").val("");
-				}
-			}
-
-			$("#inItemText", "#datepicker").keyup(function(e) {
-				if (e.keyCode == 13) {
-					addNewItem();
-					storeItems();
-					$("#inItemText").val("");
-					$("#datepicker").val("");
-				}
-			});
-			$("#datepicker").keyup(function(e) {
-				if (e.keyCode == 13) {
-					addNewItem();
-					storeItems();
-					$("#inItemText").val("");
-					$("#datepicker").val("");
-				}
-			});
-			$("#btnAdd").click(addNewItem);
-			$("#btnAdd").click(storeItems);
-
-		});
+		$("#inItemText").val("");
+		$("#datepicker").val("");
+	}
+}
+function buildStoredList() {
+	$('#todoList').html("")
+	$('#deadlineList').html("")
+	ItemList = loadItems();
+	for (var i = 0; i < ItemList.length; i++) {
+		buildItemList(ItemList[i])
+	}
+}
 
 function updateItemStatus(x) {
 	var cbId = $(x).attr("id").replace("cb_", "");
@@ -76,8 +60,47 @@ function loadItems() {
 	var activeItems = [];
 	if (localStorage.ItemList) {
 		activeItems = JSON.parse(localStorage.ItemList);
-
 	}
 	return activeItems;
-};
+}
+function getItemById(id) {
+	for (var i = 0; i < ItemList.length; i++) {
+		if (ItemList[i].id == id) {
+			return ItemList[i];
+		}
+	}
+}
+function removeItem(ItemId) {
+	ItemList.splice(ItemId, 1);
+	for(var i =0;i<ItemList.length;i++){
+		ItemList[i].ItemListLength = i
+	}
+	storeItems();
+	buildStoredList();
 
+}
+$(document).ready(function() {
+	$("#datepicker").datepicker();
+	$('#inItemText').focus();
+	$("#btnAdd").click(addNewItem);
+	$("#btnAdd").click(storeItems);
+	$(".delete").click(removeItem);
+	$("#inItemText", "#datepicker").keyup(function(e) {
+		if (e.keyCode == 13) {
+			addNewItem();
+			storeItems();
+			$("#inItemText").val("");
+			$("#datepicker").val("");
+		}
+	});
+	$("#datepicker").keyup(function(e) {
+		if (e.keyCode == 13) {
+			addNewItem();
+			storeItems();
+			$("#inItemText").val("");
+			$("#datepicker").val("");
+		}
+	});
+	buildStoredList()
+
+})
