@@ -10,6 +10,7 @@
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
+<script type='text/javascript' src="js/mustache.js"></script>
 <script type='text/javascript' src="js/jquery-1.12.3.js"></script>
 
 <script type='text/javascript' src="js/bootstrap.min.js"></script>
@@ -22,27 +23,23 @@
 
 <body>
 	<div class="container center-block">
-
 		<h1 class="center">To do List</h1>
-		<div class="container">
+		<div class="col-md-2"></div>
+		<div class="container center-block col-md-8">
 			<p>
 				ToDo Name: <input type="text" id="inItemText" /> Deadline: <input
 					type="text" id="datepicker">
 				<button id="btnAdd">New Item</button>
 			</p>
-		</div>
-		<div class="container">
-			<div class="center-block">
-				<ul class="col-md-2 col-sm-2"></ul>
-				<div>
-					<ul class="col-md-6 col-sm-6" id="todoList"></ul>
-					<ul class="col-md-2 col-sm-2" id="deadlineList"></ul>
+			<div class="container" id="list">
+				<div class="row center-block">
+					<ul class="col-md-8 col-sm-8 col-xs-8" id="todoList"></ul>
+					<ul class="col-md-4 col-sm-4 col-xs-4" id="deadlineList"></ul>
 				</div>
-				<ul class="col-md-2 col-sm-2"></ul>
 			</div>
 		</div>
+		<div class="col-md-2"></div>
 	</div>
-
 </body>
 
 </html>

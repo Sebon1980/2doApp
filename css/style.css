@@ -20,20 +20,20 @@ ul {
 	list-style: none;
 }
 
-ul {
-	padding: 0px;
-}
-
 li {
 	border: 1px solid #ccc;
 	background-color: #eee;
 	padding: 5px;
 	color: #000;
-	font-size: 120%;
+	font-size: 100%;
 }
 
 li span {
-	padding-left: 10px;
+	
+}
+
+#btnDetail, #btnDel {
+	float: right;
 }
 
 h1 {
@@ -48,14 +48,22 @@ p {
 	text-align: center;
 }
 
+#list {
+	max-width: 100%;
+	padding: 0px;
+}
+
 #todoList {
-	padding-right: 0px
+	padding: 0px
 }
 
 #deadlineList {
-	padding-left: 0px;
+	padding: 0px;
 }
-
+#tmplDead{
+	text-align: center;
+}
 input[type=checkbox] {
 	margin-left: 5px;
+	margin-top: 0px;
 }

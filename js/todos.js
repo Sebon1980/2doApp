@@ -1,46 +1,59 @@
-$(document)
-		.ready(
+var ItemList = [];
 
-				function() {
-					$("#datepicker").datepicker();
-					$('#inItemText').focus();
-					var totalItems = 0;
-					function addNewItem(cbId, itemText, deadline) {
-						totalItems++;
-						cbId = "";
-						itemText = $('#inItemText').val();
-						deadline = $('#datepicker').val();
-						$('#inItemText').focus();
-						if (!itemText || itemText == "" || itemText == " ") {
-							return false;
-						} else {
+$(document).ready(
 
-							$('#todoList')
-									.append(
-											'<li><input class="chkBox" type="checkbox" onclick="updateItemStatus(this)" id="cb_'
-													+ totalItems
-													+ '"/><span id="item_'
-													+ totalItems
-													+ '">'
-													+ itemText + '</span></li>');
-							$('#deadlineList').append(
-									'<li class="center" id="dl_' + totalItems
-											+ '"><span>' + deadline
-											+ '</span></li>');
-							$("#inItemText").val("");
-						}
-					}
+		function() {
+			$("#datepicker").datepicker();
+			$('#inItemText').focus();
 
-					$("#inItemText").keyup(function(e) {
-						if (e.keyCode == 13) {
-							addNewItem();
-							$("#inItemText").val("");
-						}
-					});
+			function addNewItem(cbId, itemText, deadline) {
+				var viewItem = {
+					itemText : $('#inItemText').val(),
+					deadline : $('#datepicker').val(),
 
-					$("#btnAdd").click(addNewItem);
+				};
+				ItemList.push(viewItem);
 
-				});
+				$('#inItemText').focus();
+				if (!viewItem.itemText || viewItem.itemText == ""
+						|| viewItem.itemText == " ") {
+					return false;
+				} else {
+					$.get('templateText.html', function(template) {
+						var renderedText = Mustache.render(template, viewItem);
+						$('#todoList').append(renderedText);
+					})
+					$.get('templateDead.html', function(template) {
+						var renderedDead = Mustache.render(template, viewItem);
+						$('#deadlineList').append(renderedDead);
+					})
+
+					$("#inItemText").val("");
+					$("#datepicker").val("");
+				}
+			}
+
+			$("#inItemText", "#datepicker").keyup(function(e) {
+				if (e.keyCode == 13) {
+					addNewItem();
+					storeItems();
+					$("#inItemText").val("");
+					$("#datepicker").val("");
+				}
+			});
+			$("#datepicker").keyup(function(e) {
+				if (e.keyCode == 13) {
+					addNewItem();
+					storeItems();
+					$("#inItemText").val("");
+					$("#datepicker").val("");
+				}
+			});
+			$("#btnAdd").click(addNewItem);
+			$("#btnAdd").click(storeItems);
+
+		});
+
 function updateItemStatus(x) {
 	var cbId = $(x).attr("id").replace("cb_", "");
 	var itemText = $("#item_" + cbId)
@@ -54,3 +67,17 @@ function updateItemStatus(x) {
 		itemText.css("color", "#000")
 	}
 }
+
+function storeItems() {
+	localStorage.ItemList = JSON.stringify(ItemList);
+};
+
+function loadItems() {
+	var activeItems = [];
+	if (localStorage.ItemList) {
+		activeItems = JSON.parse(localStorage.ItemList);
+
+	}
+	return activeItems;
+};
+
