@@ -16,7 +16,6 @@ ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
-	width: 500px;
 	list-style: none;
 }
 
@@ -31,15 +30,23 @@ li {
 li span {
 	
 }
-.delete{
-	float:right;
+
+.delete {
+	float: right;
+	height: 1.7em;
+	font-size: 80%
 }
+
 #btnDetail, #btnDel {
 	float: right;
 }
 
 h1 {
 	text-align: center;
+}
+
+#inputHeader {
+	z-index: +1;
 }
 
 p {
@@ -51,20 +58,29 @@ p {
 }
 
 #list {
-	max-width: 100%;
 	padding: 0px;
+	max-width: 80%;
+	float: none;
 }
 
 #todoList {
-	padding: 0px
+	padding: 0px;
 }
 
 #deadlineList {
 	padding: 0px;
 }
-#tmplDead{
+
+#tmplDead {
 	text-align: center;
+	/*	animation-delay: .5s;*/
 }
+
+#tmplText {
+	/*	animation-delay: .5s;*/
+	
+}
+
 input[type=checkbox] {
 	margin-left: 5px;
 	margin-top: 0px;

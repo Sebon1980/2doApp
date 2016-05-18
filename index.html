@@ -6,37 +6,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/animate.css" rel="stylesheet" />
 <link href="css/style.css" rel="stylesheet" />
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
 <script type='text/javascript' src="js/mustache.js"></script>
 <script type='text/javascript' src="js/jquery-1.12.3.js"></script>
-
 <script type='text/javascript' src="js/bootstrap.min.js"></script>
 <script
 	src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
-
 <script type='text/javascript' src="js/todos.js"></script>
+
 <title>what2do</title>
 </head>
 
 <body>
 	<div class="container center-block">
-		<h1 class="center">To do List</h1>
+		<h1 class="center animated pulse">To do List</h1>
 		<div class="col-md-2"></div>
-		<div class="container center-block col-md-8">
+		<div class="container center-block col-md-12"id="inputHeader">
 			<p>
 				ToDo Name: <input type="text" id="inItemText" /> Deadline: <input
 					type="text" id="datepicker">
-				<button id="btnAdd">New Item</button>
+				<button onclick="addNewItem()" id="btnAdd">New Item</button>
+				<button onclick="storeItems()" id="btnSave">SaveList</button>
 			</p>
-			<div class="container" id="list">
-				<div class="row center-block">
-					<ul class="col-md-8 col-sm-8 col-xs-8" id="todoList"></ul>
-					<ul class="col-md-4 col-sm-4 col-xs-4" id="deadlineList"></ul>
-				</div>
-			</div>
+		</div>
+		<div class="row col-md-12 center-block" id="list">
+			<ul class=" col-md-8 col-sm-8 col-xs-8" id="todoList"></ul>
+			<ul class=" col-md-4 col-sm-4 col-xs-4" id="deadlineList"></ul>
 		</div>
 		<div class="col-md-2"></div>
 	</div>
