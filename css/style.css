@@ -2,12 +2,25 @@ body {
 	background-color: #555;
 	color: #fff;
 }
-
+textarea{
+	width:100%;
+	rows:7;
+}
 button {
 	color: #333
 }
-
-#inItemText, #datepicker {
+.modal-title{
+	color:#333;
+	text-decoration: underline;
+}
+.modal-deadline{
+	color:#333;
+	float:left;
+}
+.modal-body{
+	color:#333;
+}
+#inTaskText, #datepicker {
 	color: #333;
 }
 
@@ -25,10 +38,6 @@ li {
 	padding: 5px;
 	color: #000;
 	font-size: 100%;
-}
-
-li span {
-	
 }
 
 .delete {
@@ -52,18 +61,24 @@ h1 {
 p {
 	text-align: center;
 }
-.deadLine{
-	float:right;
-	margin-right:10px;
-	
+
+.detail {
+	float: right;
+	height: 1.7em;
+	font-size: 80%
 }
+
+.deadLine {
+	float: right;
+	margin-right: 10px;
+}
+
 .center {
 	text-align: center;
 }
 
 #list {
-	
-	height:300px;
+	height: 300px;
 	padding: 0px;
 	max-width: 80%;
 	float: none;

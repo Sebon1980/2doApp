@@ -1,169 +1,189 @@
-var ItemList = [];
+var TaskList = [];
 var elementTemplate = undefined;
+var activeTask = undefined;
 
 /**
- * Creates a new item and adds it to the list of items if valid.
+ * Creates a new Task and adds it to the list of Tasks if valid.
  */
-function addNewItem() {
-	var viewItem = createNewItem($('#inItemText').val(), $('#datepicker').val());
-	if(!validateItem(viewItem)) {
+function addNewTask() {
+	var viewTask = createNewTask($('#inTaskText').val(), $('#datepicker').val());
+	if (!validateTask(viewTask)) {
 		return;
 	}
-	
-	ItemList.push(viewItem);
-	var element = buildItem(viewItem);
+
+	TaskList.push(viewTask);
+	var element = buildTask(viewTask);
 	element.addClass('animated fadeInRight');
 	$('#todoList').append(element);
-	storeItems();
-	
-	$("#inItemText").val("");
+	storeTask();
+
+	$("#inTaskText").val("");
 	$("#datepicker").val("");
-	$('#inItemText').focus();
+	$('#inTaskText').focus();
 }
 
 /**
- * Crearte sa new Item with the given itemText and deadline.
+ * Crearte sa new Task with the given TaskText and deadline.
  * 
- * @param {string} itemText The title of the item
- * @param {string} deadline the deadline of the item (format: MM/DD/YYYY)
- * @returns {Item} a new item instance
+ * @param {string}
+ *            TaskText The title of the Task
+ * @param {string}
+ *            deadline the deadline of the Task (format: MM/DD/YYYY)
+ * @returns {Task} a new Task instance
  */
-function createNewItem(itemText, deadline) {
+function createNewTask(TaskText, deadline) {
 	return {
-		id : ItemList.length,
-		itemText : itemText,
-		deadline : deadline
+		id : TaskList.length,
+		TaskText : TaskText,
+		deadline : deadline,
+		description : ""
 	};
 }
 
 /**
- * Returns true if the given item is valid
+ * Returns true if the given Task is valid
  * 
- * @param viewItem
+ * @param viewTask
  * @returns {Boolean}
  */
-function validateItem(viewItem) {
-	if (!viewItem.itemText || viewItem.itemText == ""
-		|| viewItem.itemText == " " || viewItem.deadline == "") {
+function validateTask(viewTask) {
+	if (!viewTask.TaskText || viewTask.TaskText == ""
+			|| viewTask.TaskText == " " || viewTask.deadline == "") {
 		return false;
 	}
 	return true;
 }
 
 /**
- * First test if any value of "viewItem" is undefined. In that case nothing
- * happens. Otherwise construct the DOM Element for each "viewItem"and his
+ * First test if any value of "viewTask" is undefined. In that case nothing
+ * happens. Otherwise construct the DOM Element for each "viewTask"and his
  * values by using MUSTACHE.js at the end the inputfield and datepicker will be
  * cleared
  */
-function buildItem(viewItem) {
-	var renderedText = Mustache.render(elementTemplate, viewItem);
+function buildTask(viewTask) {
+	var renderedText = Mustache.render(elementTemplate, viewTask);
 	var element = $(renderedText);
 	return element;
 }
 
 /*
- * Function to store the array of Items to LocalStorage by using JSON.stringify
+ * Function to store the array of Tasks to LocalStorage by using JSON.stringify
  */
-function storeItems() {
-	localStorage.ItemList = JSON.stringify(ItemList);
+function storeTask() {
+	localStorage.TaskList = JSON.stringify(TaskList);
 };
 
 /*
  * Clear the complete DoOM elements "#todoList & "#deadlineList" and refill them
- * with the Items, stored in the LocalStorage by using the function "buildItem"
+ * with the Tasks, stored in the LocalStorage by using the function "buildTask"
  */
 function buildStoredList() {
 	$('#todoList').html("")
 	$('#deadlineList').html("")
-	ItemList = loadItems();
-	for (var i = 0; i < ItemList.length; i++) {
-		ItemList[i].animate = "none"
-			$('#todoList').append(buildItem(ItemList[i]));
+	TaskList = loadTask();
+	for (var i = 0; i < TaskList.length; i++) {
+		TaskList[i].animate = "none"
+		$('#todoList').append(buildTask(TaskList[i]));
 	}
-	storeItems()
+	storeTask()
 }
 /*
- * Function to reload all Items from the LocalStorage by using JSON.parse
+ * Function to reload all Tasks from the LocalStorage by using JSON.parse
  */
-function loadItems() {
-	var activeItems = [];
-	if (localStorage.ItemList) {
-		activeItems = JSON.parse(localStorage.ItemList);
+function loadTask() {
+	var activeTask = [];
+	if (localStorage.TaskList) {
+		activeTask = JSON.parse(localStorage.TaskList);
 	}
-	return activeItems;
+	return activeTask;
 };
 /*
- * Change the CSS of each Item when the checkbox will be toggled
+ * Change the CSS of each Task when the checkbox will be toggled
  */
-function updateItemStatus(x) {
+function updateTaskStatus(x) {
 	var cbId = $(x).attr("id").replace("cb_", "");
-	var itemText = $("#item_" + cbId)
+	var TaskText = $("#task_" + cbId)
 	if ($(x).is(":checked")) {
-		itemText.css("text-decoration", "line-through");
-		itemText.css("font-weight", "600");
-		itemText.css("color", "#ccc")
+		TaskText.css("text-decoration", "line-through");
+		TaskText.css("font-weight", "600");
+		TaskText.css("color", "#ccc")
 	} else {
-		itemText.css("text-decoration", "none");
-		itemText.css("font-weight", "300");
-		itemText.css("color", "#000")
+		TaskText.css("text-decoration", "none");
+		TaskText.css("font-weight", "300");
+		TaskText.css("color", "#000")
 	}
 }
 
 /*
- * function to get the absolute ID from each Item
+ * function to get the absolute ID from each Task
  */
-function getItemById(id) {
-	for (var i = 0; i < ItemList.length; i++) {
-		if (ItemList[i].id == id) {
-			return ItemList[i];
+function getTaskById(id) {
+	for (var i = 0; i < TaskList.length; i++) {
+		if (TaskList[i].id == id) {
+			return TaskList[i];
 		}
 	}
 }
 /*
- * function to remove Items from the localStorage when deleted
+ * function to remove Tasks from the localStorage when deleted
  */
-function removeItem(ItemId) {
-	ItemList.splice(ItemId, 1);
-	for (var i = 0; i < ItemList.length; i++) {
-		ItemList[i].id = i
+function removeTask(taskId) {
+	TaskList.splice(taskId, 1);
+	for (var i = 0; i < TaskList.length; i++) {
+		TaskList[i].id = i
 	}
 
-	var element = $("#tmplText_" + ItemId);
+	var element = $("#tmplText_" + taskId);
+	var modal = $("#modal_" + taskId);
+
 	element.addClass('animated fadeOutRight');
-	element.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-		element.remove();
-	});
-	storeItems();
+	element
+			.one(
+					'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+					function() {
+						element.remove();
+						modal.remove();
+					});
+	storeTask();
 
 }
+
 /**
- * Process at Document loading by getting the Items of LocalStorage and rebuild
+ * Process at Document loading by getting the Tasks of LocalStorage and rebuild
  * the DOM
  */
-
 $(document).ready(function() {
+	$('#myModal').on('show.bs.modal', function(e) {
+		activeTask = getTaskById(e.relatedTarget.dataset.taskid);
+		$('#myModalLabel').html(activeTask.TaskText);
+		$('#descrip').val(activeTask.description);
+	});
 	
+	$('#btnSaveDetails').click(function() {
+		activeTask.description = $('#descrip').val();
+		storeTask();
+	});
+
 	$.get('templateText.html', function(template) {
 		elementTemplate = template;
 
-		$('#inItemText').focus();
+		$('#inTaskText').focus();
 		$("#datepicker").datepicker();
-		$("#inItemText").keyup(function(e) {
+		$("#inTaskText").keyup(function(e) {
 			if (e.keyCode == 13) {
-				addNewItem();
-				$("#inItemText").val("");
+				addNewTask();
+				$("#inTaskText").val("");
 				$("#datepicker").val("");
 			}
 		});
 		$("#datepicker").keyup(function(e) {
 			if (e.keyCode == 13) {
-				addNewItem();
-				$("#inItemText").val("");
+				addNewTask();
+				$("#inTaskText").val("");
 				$("#datepicker").val("");
 			}
 		});
 		buildStoredList()
 	});
-	
+
 })

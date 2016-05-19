@@ -22,21 +22,43 @@
 </head>
 
 <body>
+<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h3 class="modal-title" id="myModalLabel"></h3>
+				</div>
+				<div class="modal-body">
+					<textarea id="descrip" placeholder="enter a short description here..."rows="7"></textarea>
+				</div>
+				<div class="modal-footer">
+					<h4 class="modal-deadline" id="myModalDeadline">
+						</h4>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="btnSaveDetails" data-dismiss="modal">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="container center-block">
 		<h1 class="center animated pulse">To do List</h1>
-		<div class="col-md-2"></div>
 		<div class="container center-block col-md-12" id="inputHeader">
 			<p>
-				ToDo Name: <input type="text" id="inItemText" /> Deadline: <input
+				ToDo Name: <input type="text" id="inTaskText" /> Deadline: <input
 					type="text" id="datepicker">
-				<button onclick="addNewItem()" id="btnAdd">New Item</button>
+				<button onclick="addNewTask()" id="btnAdd">New Task</button>
 			</p>
 		</div>
-
 		<div class="row col-md-12 center-block" id="list">
 			<ul class=" col-md-12 col-sm-12 col-xs-12" id="todoList"></ul>
 		</div>
-		<div class="col-md-2"></div>
+
 	</div>
 </body>
 
