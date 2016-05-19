@@ -1,12 +1,18 @@
-<li  class="foo" id="tmplText_{{ItemListLength}}">
+<li id="tmplText_{{id}}">
 	<input 	class="chkBox " 
 			type="checkbox" 
 			onclick="updateItemStatus(this)" 
-			id="cb_{{ItemListLength}}"/>
-	<span 	class="text"id="item_{{ItemListLength}}">
+			id="cb_{{id}}"/>
+	<span 	class="text"id="item_{{id}}">
 				{{itemText}}
 	</span>
-	<button onClick="removeItem({{ItemListLength}})" class="delete" id="btnDel_{{ItemListLength}}">Delete</button>
+	<button onClick="removeItem({{id}})" class="delete" id="btnDel_{{id}}">Delete</button>
+	<div class="deadLine">
+	<span 
+		id="dl_{{id}}">
+		{{deadline}}
+	</span>
+	</div>
 </li>
 		
 

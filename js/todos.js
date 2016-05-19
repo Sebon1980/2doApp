@@ -1,57 +1,65 @@
 var ItemList = [];
+var elementTemplate = undefined;
 
 /**
- * Create one single Item Object("viewItem") with the values of the input
- * textfield as "ItemText", the value of datepicker as "deadline" and index
- * Number by getting the place in the "ItemList" Array
+ * Creates a new item and adds it to the list of items if valid.
  */
 function addNewItem() {
-
-	var viewItem = {
-		ItemListLength : ItemList.length,
-		itemText : $('#inItemText').val(),
-		deadline : $('#datepicker').val(),
-	};
-	if (!viewItem.itemText || viewItem.itemText == ""
-			|| viewItem.itemText == " " || viewItem.deadline == "") {
-		return false
-	} else {
-		ItemList.push(viewItem);
-		buildItem(viewItem)
-
+	var viewItem = createNewItem($('#inItemText').val(), $('#datepicker').val());
+	if(!validateItem(viewItem)) {
+		return;
 	}
-	;
+	
+	ItemList.push(viewItem);
+	var element = buildItem(viewItem);
+	element.addClass('animated fadeInRight');
+	$('#todoList').append(element);
+	storeItems();
+	
+	$("#inItemText").val("");
+	$("#datepicker").val("");
+	$('#inItemText').focus();
 }
+
+/**
+ * Crearte sa new Item with the given itemText and deadline.
+ * 
+ * @param {string} itemText The title of the item
+ * @param {string} deadline the deadline of the item (format: MM/DD/YYYY)
+ * @returns {Item} a new item instance
+ */
+function createNewItem(itemText, deadline) {
+	return {
+		id : ItemList.length,
+		itemText : itemText,
+		deadline : deadline
+	};
+}
+
+/**
+ * Returns true if the given item is valid
+ * 
+ * @param viewItem
+ * @returns {Boolean}
+ */
+function validateItem(viewItem) {
+	if (!viewItem.itemText || viewItem.itemText == ""
+		|| viewItem.itemText == " " || viewItem.deadline == "") {
+		return false;
+	}
+	return true;
+}
+
 /**
  * First test if any value of "viewItem" is undefined. In that case nothing
  * happens. Otherwise construct the DOM Element for each "viewItem"and his
  * values by using MUSTACHE.js at the end the inputfield and datepicker will be
  * cleared
  */
-
 function buildItem(viewItem) {
-
-	$.get('templateText.html', function(template) {
-		var renderedText = Mustache.render(template, viewItem);
-		if (JSON.parse(localStorage.ItemList).length < ItemList.length) {
-			renderedText = renderedText.replace('class="foo"',
-					'class="animated fadeInRight"')
-		}
-		$('#todoList').append(renderedText);
-	})
-	$.get('templateDead.html', function(template) {
-		var renderedDead = Mustache.render(template, viewItem);
-		if (JSON.parse(localStorage.ItemList).length < ItemList.length) {
-			renderedDead = renderedDead.replace('class="foo"',
-					'class="animated fadeInRight"')
-		}
-		$('#deadlineList').append(renderedDead);
-
-	})
-
-	$("#inItemText").val("");
-	$("#datepicker").val("");
-	$('#inItemText').focus();
+	var renderedText = Mustache.render(elementTemplate, viewItem);
+	var element = $(renderedText);
+	return element;
 }
 
 /*
@@ -70,7 +78,8 @@ function buildStoredList() {
 	$('#deadlineList').html("")
 	ItemList = loadItems();
 	for (var i = 0; i < ItemList.length; i++) {
-		buildItem(ItemList[i])
+		ItemList[i].animate = "none"
+			$('#todoList').append(buildItem(ItemList[i]));
 	}
 	storeItems()
 }
@@ -117,11 +126,14 @@ function getItemById(id) {
 function removeItem(ItemId) {
 	ItemList.splice(ItemId, 1);
 	for (var i = 0; i < ItemList.length; i++) {
-		ItemList[i].ItemListLength = i
+		ItemList[i].id = i
 	}
 
-	$("#tmplText_" + ItemId).remove()
-	$("#tmplDead_" + ItemId).remove()
+	var element = $("#tmplText_" + ItemId);
+	element.addClass('animated fadeOutRight');
+	element.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+		element.remove();
+	});
 	storeItems();
 
 }
@@ -131,21 +143,27 @@ function removeItem(ItemId) {
  */
 
 $(document).ready(function() {
-	$('#inItemText').focus();
-	$("#datepicker").datepicker();
-	$("#inItemText").keyup(function(e) {
-		if (e.keyCode == 13) {
-			addNewItem();
-			$("#inItemText").val("");
-			$("#datepicker").val("");
-		}
+	
+	$.get('templateText.html', function(template) {
+		elementTemplate = template;
+
+		$('#inItemText').focus();
+		$("#datepicker").datepicker();
+		$("#inItemText").keyup(function(e) {
+			if (e.keyCode == 13) {
+				addNewItem();
+				$("#inItemText").val("");
+				$("#datepicker").val("");
+			}
+		});
+		$("#datepicker").keyup(function(e) {
+			if (e.keyCode == 13) {
+				addNewItem();
+				$("#inItemText").val("");
+				$("#datepicker").val("");
+			}
+		});
+		buildStoredList()
 	});
-	$("#datepicker").keyup(function(e) {
-		if (e.keyCode == 13) {
-			addNewItem();
-			$("#inItemText").val("");
-			$("#datepicker").val("");
-		}
-	});
-	buildStoredList()
+	
 })

@@ -52,12 +52,18 @@ h1 {
 p {
 	text-align: center;
 }
-
+.deadLine{
+	float:right;
+	margin-right:10px;
+	
+}
 .center {
 	text-align: center;
 }
 
 #list {
+	
+	height:300px;
 	padding: 0px;
 	max-width: 80%;
 	float: none;
