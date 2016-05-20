@@ -156,17 +156,28 @@ $(document).ready(function() {
 	$('#myModal').on('show.bs.modal', function(e) {
 		activeTask = getTaskById(e.relatedTarget.dataset.taskid);
 		$('#myModalLabel').html(activeTask.TaskText);
-		$('#descrip').val(activeTask.description);
+		$('#newDescrip').val(activeTask.description);
+		$('#myModalDeadline').html(activeTask.deadline);
 	});
-	
+
 	$('#btnSaveDetails').click(function() {
-		activeTask.description = $('#descrip').val();
+		if ($('#newTitle').val() != "") {
+			activeTask.TaskText = $('#newTitle').val();
+		}
+		if ($('#newDatepicker').val() != "") {
+			activeTask.deadline = $('#newDatepicker').val();
+		}
+		if ($('#newDescrip').val() != "") {
+			activeTask.description = $('#newDescrip').val();
+		}
 		storeTask();
+		buildStoredList()
+
 	});
 
 	$.get('templateText.html', function(template) {
 		elementTemplate = template;
-
+		$("#newDatepicker").datepicker();
 		$('#inTaskText').focus();
 		$("#datepicker").datepicker();
 		$("#inTaskText").keyup(function(e) {

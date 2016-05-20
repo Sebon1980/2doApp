@@ -2,26 +2,18 @@ body {
 	background-color: #555;
 	color: #fff;
 }
-textarea{
-	width:100%;
-	rows:7;
+
+textarea {
+	width: 100%;
+	rows: 7;
 }
+
 button {
 	color: #333
 }
-.modal-title{
-	color:#333;
-	text-decoration: underline;
-}
-.modal-deadline{
-	color:#333;
-	float:left;
-}
-.modal-body{
-	color:#333;
-}
-#inTaskText, #datepicker {
-	color: #333;
+
+h1 {
+	text-align: center;
 }
 
 ul {
@@ -40,26 +32,28 @@ li {
 	font-size: 100%;
 }
 
+p {
+	text-align: center;
+}
+
+.modal-title {
+	color: #333;
+	text-decoration: underline;
+}
+
+.modal-deadline {
+	color: #333;
+	float: left;
+}
+
+.modal-body {
+	color: #333;
+}
+
 .delete {
 	float: right;
 	height: 1.7em;
 	font-size: 80%
-}
-
-#btnDetail, #btnDel {
-	float: right;
-}
-
-h1 {
-	text-align: center;
-}
-
-#inputHeader {
-	z-index: +1;
-}
-
-p {
-	text-align: center;
 }
 
 .detail {
@@ -75,6 +69,18 @@ p {
 
 .center {
 	text-align: center;
+}
+
+#inTaskText, #datepicker {
+	color: #333;
+}
+
+#btnDetail, #btnDel {
+	float: right;
+}
+
+#inputHeader {
+	z-index: +1;
 }
 
 #list {
@@ -100,6 +106,14 @@ p {
 #tmplText {
 	/*	animation-delay: .5s;*/
 	
+}
+
+#descrip {
+	margin-bottom: 7px;
+}
+
+#newTitle {
+	margin-bottom: 7px;
 }
 
 input[type=checkbox] {
