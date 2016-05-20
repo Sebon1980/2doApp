@@ -110,7 +110,7 @@ function updateTaskStatus(x) {
 	} else {
 		TaskText.css("text-decoration", "none");
 		TaskText.css("font-weight", "300");
-		TaskText.css("color", "#000")
+		TaskText.css("color", "#fff")
 	}
 }
 
