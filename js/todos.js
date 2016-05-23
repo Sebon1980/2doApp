@@ -36,7 +36,8 @@ function createNewTask(TaskText, deadline) {
 		id : TaskList.length,
 		TaskText : TaskText,
 		deadline : deadline,
-		description : ""
+		description : "",
+		checked : false
 	};
 }
 
@@ -107,10 +108,15 @@ function updateTaskStatus(x) {
 		TaskText.css("text-decoration", "line-through");
 		TaskText.css("font-weight", "600");
 		TaskText.css("color", "#ccc")
+		$(x).checked = true;
+		storeTask()
+		console.log(x.id)
+		console.log(x.checked)
 	} else {
 		TaskText.css("text-decoration", "none");
 		TaskText.css("font-weight", "300");
 		TaskText.css("color", "#fff")
+
 	}
 }
 
@@ -146,7 +152,7 @@ function removeTask(taskId) {
 						buildStoredList()
 					});
 	storeTask();
-	
+
 }
 
 /**
@@ -159,6 +165,13 @@ $(document).ready(function() {
 		$('#myModalLabel').html(activeTask.TaskText);
 		$('#newDescrip').val(activeTask.description);
 		$('#myModalDeadline').html(activeTask.deadline);
+	});
+
+	$(function() {
+		$("#datepicker").datepicker({
+			minDate : "-0D",
+			maxDate : "+6M"
+		});
 	});
 
 	$('#btnSaveDetails').click(function() {
@@ -175,15 +188,14 @@ $(document).ready(function() {
 		buildStoredList()
 
 	});
-	
+
 	$('#btnDel').click(function() {
 		$(function() {
 			$('#myModal').modal('toggle')
 		});
 		removeTask(activeTask.id)
-		
-	});
 
+	});
 
 	$.get('templateText.html', function(template) {
 		elementTemplate = template;

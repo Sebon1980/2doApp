@@ -32,15 +32,15 @@
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h3 class="modal-title" id="myModalLabel"></h3>
+					<h1 class="modal-title" id="myModalLabel"></h1>
 				</div>
 				<div class="modal-body">
-					New Title:<br> <input id="newTitle"
-						placeholder=" enter here"><br>Description:
+					New Title:<br> <input id="newTitle" placeholder=" enter here"><br>Description:
 					<textarea id="newDescrip"
-						placeholder=" enter a short description here..." rows="7"></textarea>
-					<br>New Deadline:<br> <input type="text"
+						placeholder=" enter a short description here..." rows="4"></textarea>
+					<br> New Deadline:<br> <input type="text"
 						id="newDatepicker" placeholder=" click to change">
+				
 				</div>
 				<div class="modal-footer">
 					<h4 class="modal-deadline" id="myModalDeadline"></h4>
@@ -54,11 +54,11 @@
 	</div>
 	<div class="container center-block">
 		<h1 class="center animated zoomInDown">To do List</h1>
+
 		<div class="container center-block col-md-12" id="inputHeader">
 			<p>
-				ToDo Name: <input type="text" id="inTaskText" /> Deadline: <input
-					type="text" id="datepicker">
-				<button onclick="addNewTask()" id="btnAdd">New Task</button>
+				<input type="text" id="inTaskText" placeholder=" ToDo Name:" /><input
+					type="text" id="datepicker" placeholder=" Deadline:">
 			</p>
 		</div>
 		<div class="row col-md-12 center-block" id="list">
