@@ -1,13 +1,14 @@
 @font-face {
-	font-family:'Drawing_Guides';
-	src: url('../fonts/Drawing_Guides.ttf')
+	font-family:'Filmcryptic';
+	src: url('../fonts/Filmcryptic.ttf')
 }
 
 body {
 	background-image: url("../images/chalkboard.jpg");
 	background-size: cover;
+	background-attachment:fixed;
 	color: #fff;
-	font-family:'Drawing_Guides', "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family:"Filmcryptic", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size:2em;
 }
 
@@ -30,7 +31,10 @@ button {
 
 h1 {
 	text-align: center;
-	font-size:3em !important; 
+	font-size:7em !important; 
+	margin-top:50px;
+
+	
 }
 
 ul {
@@ -39,6 +43,7 @@ ul {
 	padding: 0;
 	margin: 0;
 	list-style: none;
+	
 }
 
 li {
@@ -50,14 +55,14 @@ li {
 	padding: 5px;
 	padding-top: 8px;
 	padding-bottom: 10px; color : #fff;
-	font-size: 110%;
+	font-size:2em;
 	margin-bottom: 3px;
-	height: 50px;
 	color: #fff;
 }
 
 p {
 	text-align: center;
+	font-size:1.5em;
 }
 
 .modal-title {

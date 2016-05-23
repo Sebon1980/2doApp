@@ -143,9 +143,10 @@ function removeTask(taskId) {
 					function() {
 						element.remove();
 						modal.remove();
+						buildStoredList()
 					});
 	storeTask();
-
+	
 }
 
 /**
@@ -174,6 +175,15 @@ $(document).ready(function() {
 		buildStoredList()
 
 	});
+	
+	$('#btnDel').click(function() {
+		$(function() {
+			$('#myModal').modal('toggle')
+		});
+		removeTask(activeTask.id)
+		
+	});
+
 
 	$.get('templateText.html', function(template) {
 		elementTemplate = template;
