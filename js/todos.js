@@ -140,7 +140,6 @@ function removeTask(taskId) {
 	}
 
 	var element = $("#tmplText_" + taskId);
-	var modal = $("#modal_" + taskId);
 
 	element.addClass('animated fadeOutRight');
 	element
@@ -148,7 +147,6 @@ function removeTask(taskId) {
 					'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
 					function() {
 						element.remove();
-						modal.remove();
 						buildStoredList()
 					});
 	storeTask();
@@ -160,6 +158,8 @@ function removeTask(taskId) {
  * the DOM
  */
 $(document).ready(function() {
+	$('#inTaskText').focus();
+
 	$('#myModal').on('show.bs.modal', function(e) {
 		activeTask = getTaskById(e.relatedTarget.dataset.taskid);
 		$('#myModalLabel').html(activeTask.TaskText);
@@ -167,11 +167,27 @@ $(document).ready(function() {
 		$('#myModalDeadline').html(activeTask.deadline);
 	});
 
-	$(function() {
-		$("#datepicker").datepicker({
-			minDate : "-0D",
-			maxDate : "+6M"
-		});
+	var datepickerConfig = {
+		minDate : "-0D",
+		maxDate : "+6M"
+	};
+	$("#newDatepicker").datepicker(datepickerConfig);
+	$("#datepicker").datepicker(datepickerConfig);
+
+	$("#inTaskText").keyup(function(e) {
+		if (e.keyCode == 13) {
+			addNewTask();
+			$("#inTaskText").val("");
+			$("#datepicker").val("");
+		}
+	});
+
+	$("#datepicker").keyup(function(e) {
+		if (e.keyCode == 13) {
+			addNewTask();
+			$("#inTaskText").val("");
+			$("#datepicker").val("");
+		}
 	});
 
 	$('#btnSaveDetails').click(function() {
@@ -199,24 +215,7 @@ $(document).ready(function() {
 
 	$.get('templateText.html', function(template) {
 		elementTemplate = template;
-		$("#newDatepicker").datepicker();
-		$('#inTaskText').focus();
-		$("#datepicker").datepicker();
-		$("#inTaskText").keyup(function(e) {
-			if (e.keyCode == 13) {
-				addNewTask();
-				$("#inTaskText").val("");
-				$("#datepicker").val("");
-			}
-		});
-		$("#datepicker").keyup(function(e) {
-			if (e.keyCode == 13) {
-				addNewTask();
-				$("#inTaskText").val("");
-				$("#datepicker").val("");
-			}
-		});
-		buildStoredList()
+		buildStoredList();
 	});
 
 })
